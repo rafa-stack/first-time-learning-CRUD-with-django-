@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Portal Berita</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-4">
+
+    <!-- Navigasi Login/Register -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>📰 Berita Terbaru</h1>
+        <div>
+            {% if user.is_authenticated %}
+                <span>Halo, {{ user.username }}!</span>
+                <div class="d-flex gap-2">
+                <form method="POST" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>
+                </form>
+
+                <form method="POST" action="{% url 'hapus_akun' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm">Hapus Akun Saya</button>
+                </form>
+        </div>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-outline-primary btn-sm">Login</a>
+                <a href="{% url 'register' %}" class="btn btn-outline-success btn-sm ms-2">Register</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Tombol Tambah Berita -->
+    {% if user.is_authenticated %}
+        <a href="{% url 'tambah_berita' %}" class="btn btn-primary mb-4">📝 Tulis Berita Baru</a>
+    {% endif %}
+
+    <!-- Daftar Berita -->
+    <div class="row">
+        {% for b in berita %}
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="{% url 'detail' b.id %}">{{ b.judul }}</a>
+                        </h5>
+                        <p class="card-text">{{ b.kategori }} | {{ b.tanggal|date:"d M Y H:i" }}</p>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p>Belum ada berita yang dipublikasikan.</p>
+        {% endfor %}
+    </div>
+
+</body>
+</html>

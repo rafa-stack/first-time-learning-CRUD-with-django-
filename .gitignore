@@ -1,0 +1,24 @@
+# Created by venv; see https://docs.python.org/3/library/venv.html
+# Python cache & compiled files
+*.pyc
+__pycache__/
+
+
+# SQLite database
+db.sqlite3
+
+# Virtual environment (case-insensitive)
+env/
+Env/
+venv/
+ENV/
+.env
+
+# VS Code settings (optional)
+.vscode/
+
+# OS files (optional)
+.DS_Store
+Thumbs.db
+
+
